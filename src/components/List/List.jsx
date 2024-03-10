@@ -24,16 +24,15 @@ export default class List extends Component {
         setTimeout(() => {
             const colorList = this.state.list;
             colorList.sort();
-            const colorLi = colorList.map((item, index) => ({ text: item, color: this.getRandomColor() }))
+            const colorLi = colorList.map((item) => ({ text: item, color: this.getRandomColor() }))
             this.setState({
-                list: [...this.state.list],
-                newList: [...colorLi]
+                list: [...colorLi],
+                colorUl: this.getRandomColor()
 
             },
                 () => {
 
-                    console.log(this.state.newList[0].color);
-
+                    console.log(this.state.list);
 
                 })
         }, 3000);
@@ -50,11 +49,9 @@ export default class List extends Component {
 
     state = { ...this.props, }
     render() {
-
-        const { list = [], colorUl, newList } = this.state;
-        // console.log(newList);
+        const { list = [], colorUl, } = this.state;
         return list.length ? <ul style={{ backgroundColor: colorUl }}>
-            {list.map((item, index) => <li key={index} >{item}</li>)}
+            {list.map((item, index) => <li key={index} style={{ backgroundColor: list[index].color || null }}>{item.text || item}</li>)}
         </ul > : null;
     }
 }
